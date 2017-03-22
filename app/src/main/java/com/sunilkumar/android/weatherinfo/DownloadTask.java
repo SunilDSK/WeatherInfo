@@ -1,8 +1,6 @@
 package com.sunilkumar.android.weatherinfo;
 
-import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,10 +17,6 @@ import java.text.DecimalFormat;
 
 public class DownloadTask extends AsyncTask<String, Void, String> {
 
-    Context mContext;
-    public DownloadTask(Context context){
-        mContext = context;
-    }
 
     @Override
     protected String doInBackground(String... urls) {
@@ -42,7 +36,7 @@ public class DownloadTask extends AsyncTask<String, Void, String> {
             while (data != -1) {
                 char current = (char) data;
 
-                result+=current;
+                result += current;
                 data = inputStreamReader.read();
             }
             return result;
@@ -68,10 +62,11 @@ public class DownloadTask extends AsyncTask<String, Void, String> {
             //Get the city name
             String city = mJsonObject.getString("name");
             //Convert kelvin to celsius
-            temp-=273.15;
+            temp -= 273.15;
             //Display only 3 numbers after decimal point
             temp = Double.parseDouble(new DecimalFormat("##.###").format(temp));
-            Toast.makeText(mContext,"Its "+ desc+" with "+ temp +" in "+city+".",Toast.LENGTH_LONG).show();
+            //Display the info on TextView
+            MainActivity.info.setText("Its " + desc + " with " + temp + " in " + city + ".");
 
         } catch (Exception e) {
             e.printStackTrace();
